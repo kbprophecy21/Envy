@@ -1,4 +1,4 @@
-package io.kyle.inventory.domain;
+package io.kyle.inventory.domain.inventory;
 
 import java.time.Instant;
 import java.util.UUID;

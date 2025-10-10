@@ -1,0 +1,6 @@
+This folder responsibility is to act and be the supervisors and manager of the system.
+
+Handling Business rules and logic. Being the brains of the system. Each subfolder handles one part the warehouse/ factory logic.
+
+
+Verbs (actions). 

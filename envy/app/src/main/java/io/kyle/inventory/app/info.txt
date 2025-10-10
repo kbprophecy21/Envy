@@ -1,0 +1,2 @@
+This folder is the Entry points/CLI/Main clas. This is Warehouse Frontside. 
+Handling Front interface for the user.

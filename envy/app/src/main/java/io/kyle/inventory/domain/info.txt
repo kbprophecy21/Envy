@@ -1,0 +1,6 @@
+Domain folder Defines what things exist (Data) this is the Nouns.
+the job of this folder is define data models. 
+
+subfolder group types of domain objects by topic. [ inventory, production, routing, order];
+
+Think of this as the blueprints/ paper forms with Data definitions. 

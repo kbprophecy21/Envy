@@ -1,0 +1,8 @@
+This folder will handle the save & load data side. Responsibility for filing cabinets or database.
+This will keep track of logs and entry made throughout the system of the app.
+They should be 3 databases. (logging entry and movements, Keeping track of inventory, and informations on Product.)
+
+depending on the size of the data will determine how the structure should be build or what type of DB should
+be used. 
+
+Every sub folder covers a different topic on different datas, keeping it clean and orgainized.
