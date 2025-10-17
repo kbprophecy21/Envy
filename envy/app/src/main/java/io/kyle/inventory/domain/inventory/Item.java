@@ -11,12 +11,13 @@ public class Item {
     private String unit;
     private int reorderPoint;
     private String itemDescription;
+    private String itemImage; // !!!Not sure about the data type here
 
 
 
     // ---------Constructors-----------------//
 
-    public Item() {};
+    public Item() {}; // No arg contructor for testing I believe.
 
 
     public Item(String itemNumber, String itemName, String itemCategory, String unit, int reorderPoint, String itemDescription) 

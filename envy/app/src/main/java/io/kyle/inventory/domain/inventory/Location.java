@@ -5,7 +5,7 @@ public class Location {
     private String bayArea;
     private String selfLocation;
     private String department;
-    private char section;
+    private String section;
     
 
 }

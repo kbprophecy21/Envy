@@ -1,14 +1,19 @@
 package io.kyle.inventory.service.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.kyle.inventory.domain.inventory.Movement;
+
 public class InventoryService {
 
 
+    private final List<Movement> ledger = new ArrayList<>();
 
 
 
 
-
-    public void recieve(String itemNumber, String toLocation, int qty, String note) {};
+    public void receive(String itemNumber, String toLocation, int qty, String note) {};
 
 
     public void pick(String itemNumber, String fromLocation, int qty, String note) {}; // Must throw error if not enough.  
@@ -19,13 +24,12 @@ public class InventoryService {
 
     public void cycleCount(String itemNumber, String location, int countedQty, String note) {}; // Writes the difference.
 
-    public void availableAt(String itemNumber, String location) { 
-        // needs to change void to integer(int). this functions needs to return the quanity of that item at that location. 
-    };
+    public int availableAt(String itemNumber, String location) {};
 
-    public void onHandFor(String itemNumber) {
-        // needs to change void to integer(int). this functions needs to return what is on hand for that item number. 
-    };
+    public int onHandFor(String itemNumber) {};
+
+    public Map<String, Map<String,Integer>> currentOnHand() {};
+
 
     
 
