@@ -1,7 +1,7 @@
 package io.kyle.inventory.service.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.kyle.inventory.domain.inventory.Movement;
 
@@ -28,7 +28,15 @@ public class InventoryService {
 
     public int onHandFor(String itemNumber) {};
 
-    public Map<String, Map<String,Integer>> currentOnHand() {};
+    public Map<String, Map<String,Integer>> currentOnHand() {
+        Map<String, Map<String,Integer>> onHand = new Hashmap<>();
+
+        for (Movement movement : ledger) {
+            String itemNumber = movement.getItemNumber();
+            onHand.conputeIfAbsent(itemNumber, k -> new HashMap<>());
+            Map<String, Integer> byLocation = onHand.get(itemNumber);
+        };
+    };
 
 
     
