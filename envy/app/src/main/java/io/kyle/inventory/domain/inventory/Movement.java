@@ -7,7 +7,7 @@ public class Movement {
 
     // --- data members ---//
     private String id;
-    private String sku;
+    private String itemNumber;
     private MovementType type;
     private String fromLocation;
     private String toLocation;
@@ -20,9 +20,9 @@ public class Movement {
    public Movement() {}
 
 
-   public Movement(String sku, MovementType type, String fromLocation, String toLocation, int quantity, String note) {
+   public Movement(String itemNumber, MovementType type, String fromLocation, String toLocation, int quantity, String note) {
        this.id = UUID.randomUUID().toString();
-       this.sku = sku;
+       this.itemNumber = itemNumber;
        this.type = type;
        this.fromLocation = fromLocation;
        this.toLocation = toLocation;
@@ -36,8 +36,8 @@ public class Movement {
    public String getId(){return id;}
    public void setId(String id){this.id = id;}
 
-    public String getSku(){return sku;}
-    public void setSku(String sku){this.sku = sku;}
+    public String getItemNumber(){return itemNumber;}
+    public void setItemNumber(String itemNumber){this.sku = itemNumber;}
 
     public MovementType getType(){return type;}
     public void setType(MovementType type){this.type = type;}
@@ -63,7 +63,7 @@ public class Movement {
     public String toString() {
         return "Movement{" +
                 "id='" + id + '\'' +
-                ", sku='" + sku + '\'' +
+                ", sku='" + itemNumber + '\'' +
                 ", type=" + type +
                 ", fromLocation='" + fromLocation + '\'' +
                 ", toLocation='" + toLocation + '\'' +
