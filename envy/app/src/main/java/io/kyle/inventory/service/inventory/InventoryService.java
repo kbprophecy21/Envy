@@ -40,27 +40,52 @@ public class InventoryService {
         Map<String, Map<String,Integer>> onHand = new Hashmap<>();
 
         for (Movement movement : ledger) {
+
             String itemNumber = movement.getItemNumber();
+
             onHand.conputeIfAbsent(itemNumber, k -> new HashMap<>());
+            
             Map<String, Integer> byLocation = onHand.get(itemNumber);
 
             switch(movement.getType()) {
 
-                case IN -> {}
+                case IN -> {
+                    add(byLocation, movement.getToLocation(), movement.getQuantity());
+                }
 
-                case OUT -> {}
+                case OUT -> {
+                    add(byLocation, movement.getFromLocation(), movement.getQuantity());
+                }
 
-                case TRANSFER -> {}
+                case TRANSFER -> {
+                    add(byLocation, movement.getFromLocation(), -movement.getQuantity());
+                    add(byLocation, movement.getToLocation(), movement.getQuantity());
+                }
 
-                case ADJUST -> {}
+                case ADJUST, CYCLE_COUNT -> {
+                    add(byLocation, target(m), movement.getQuantity());
+                    
+                }
 
-                case CYCLE_COUNT -> {}
+                
 
             }
         };
 
         return onHand;
     };
+
+
+
+    private static void add(Map<String, Integer> locMap, String location, int delta) {
+        if (location == null || location.isBlank() || delta == 0) return;
+        locMap.merge(location, delta, Integer::sum);
+    };
+
+    private static String target(Movement m) {
+        String to = m.getToLocation();
+        return (to != null && !to.isBlank()) ? to : m.getFromLocation();
+    }
 
 
     
