@@ -74,7 +74,9 @@ public class InventoryCLI {
         String itemNumber = parts[1];
         String location = parts[2];
         int qty = parseQuantity(parts[3]);
-        
+        String note = (parts.length > 4) ? joinFrom(parts, 4) : "CLI Receive";
+        service.receive(itemNumber, location, qty, note);
+        println("Received " + qty + " of item " + itemNumber + " to location " + location + "."); 
     };
 
 }
