@@ -15,16 +15,49 @@ public class InventoryService {
     
 
 
-    public void receive(String itemNumber, String toLocation, int qty, String note) {};
+    public void receive(String itemNumber, String toLocation, int qty, String note) {
+        requireNonBlank(itemNumber, "Item number is required");
+        requireNonBlank(toLocation, "To location is required");
+        requirePositive(qty, "Quantity must be positive");
+        ledger.add(new Movement(itemNumber, MovementType.IN, null, toLocation, qty, note));
+    };
 
 
-    public void pick(String itemNumber, String fromLocation, int qty, String note) {}; // Must throw error if not enough.  
+    public void pick(String itemNumber, String fromLocation, int qty, String note) {
+        requireNonBlank(itemNumber, "Item number is required");
+        requireNonBlank(toLocation, "To location is required");
+        requirePositive(qty, "Quantity must be positive");
+        if (availableAt < qty) throw new IllegalArgumentException("Not enough stock to pick"); // update string later for clarity
+    }; // Must throw error if not enough.
 
-    public void transfer(String itemNumber, String fromLocation, String toLocation, int qty, String note) {}; // Must throw error if not enough.
+    public void transfer(String itemNumber, String fromLocation, String toLocation, int qty, String note) {
+        requireNonBlank(itemNumber, "Item number is required");
+        requireNonBlank(fromLocation, "From location is required");
+        requireNonBlank(toLocation, "To location is required");
+        requirePositive(qty, "Quantity must be positive");
+        int available = availableAt(itemNumber, fromLocation);
+        if (available < qty) throw new IllegalArgumentException("Not enough stock to transfer"); // update string later for clarity
+        ledger.add(new Movement(itemNumber, MovementType.TRANSFER, fromLocation, toLocation, qty, note));
 
-    public void adjust(String itemNumber, String location, int delta, String note) {}; // delta can +/-.
+    }; // Must throw error if not enough.
 
-    public void cycleCount(String itemNumber, String location, int countedQty, String note) {}; // Writes the difference.
+    public void adjust(String itemNumber, String location, int delta, String note) {
+        requireNonBlank(itemNumber, "Item number is required");
+        requireNonBlank(location, "Location is required");
+        if (delta == 0) throw new IllegalArgumentException("Adjustment delta cannot be zero");
+        ledger.add(new Movement(itemNumber, MovementType.ADJUST, location, location, delta, note));
+    }; // delta can +/-.
+
+    public void cycleCount(String itemNumber, String location, int countedQty, String note) {
+        requireNonBlank(itemNumber, "Item number is required");
+        requireNonBlank(location, "Location is required");
+        if (countedQty < 0) throw new IllegalArgumentException("Counted quantity cannot be negative");
+        int currentQty = availableAt(itemNumber, location);
+        int delta = countedQty - currentQty;
+        if (delta != 0) {
+            ledger.add(new Movement(itemNumber, MovementType.CYCLE_COUNT, location, location, difference, note));
+        }
+    }; // Writes the difference.
 
     public int availableAt(String itemNumber, String location) {
         return currentOnHand().getorDefault(itemNumber, Map.of()).getOrDefault(location, 0);
@@ -76,7 +109,7 @@ public class InventoryService {
     };
 
 
-
+//------------------------Helper Class Methods------------------------//
     private static void add(Map<String, Integer> locMap, String location, int delta) {
         if (location == null || location.isBlank() || delta == 0) return;
         locMap.merge(location, delta, Integer::sum);
@@ -85,10 +118,19 @@ public class InventoryService {
     private static String target(Movement m) {
         String to = m.getToLocation();
         return (to != null && !to.isBlank()) ? to : m.getFromLocation();
-    }
+    };
 
+    private static void requireNonBlank(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(message);
+        };
+    };
 
-    
+    private static void requirePositive(int value, String message) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(message);
+        };
+    };
 
 
 }
